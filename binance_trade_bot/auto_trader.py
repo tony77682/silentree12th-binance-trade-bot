@@ -70,7 +70,7 @@ class AutoTrader:
         Update all the coins with the threshold of buying the current held coin
         """
 
-        if coin_price is None:
+        if coin_price is None or coin_price == 0.0:
             self.logger.info("Skipping update... current coin {} not found".format(coin + self.config.BRIDGE))
             return
 
@@ -109,8 +109,8 @@ class AutoTrader:
                         continue
 
                     to_coin_price = self.manager.get_buy_price(pair.to_coin + self.config.BRIDGE)
-                    if to_coin_price is None:
-                        # self.logger.debug(
+                    if to_coin_price is None or to_coin_price == 0.0:
+                        # self.logger.info(
                         #     "Skipping initializing {}, symbol not found".format(pair.to_coin + self.config.BRIDGE)
                         # )
                         continue
@@ -223,14 +223,10 @@ class AutoTrader:
             optional_coin_price = self.manager.get_buy_price(pair.to_coin + self.config.BRIDGE)
             prices[pair.to_coin_id] = optional_coin_price
 
-            if optional_coin_price is None:
+            if optional_coin_price is None or optional_coin_price == 0.0:
                 # self.logger.info(
                 #     "Skipping scouting... optional coin {} not found".format(pair.to_coin + self.config.BRIDGE)
                 # )
-                continue
-
-            if pair.ratio is None:
-                self.initialize_trade_thresholds()
                 continue
 
             scout_logs.append(LogScout(pair, pair.ratio, coin_price, optional_coin_price))
@@ -247,7 +243,7 @@ class AutoTrader:
                 ratio_dict[pair] = (
                     coin_opt_coin_ratio - transaction_fee * self.config.SCOUT_MULTIPLIER * coin_opt_coin_ratio
                 ) - pair.ratio
-            if self.config.RATIO_CALC == self.config.RATIO_CALC_BAMOOXA:
+            if self.config.RATIO_CALC == self.config.RATIO_CALC_SCOUT_MARGIN:
                 transaction_fee = from_fee + to_fee - from_fee * to_fee
 
                 ratio_dict[pair] = (1 - transaction_fee) * coin_opt_coin_ratio / pair.ratio - (1 + self.config.SCOUT_MULTIPLIER / 100)
