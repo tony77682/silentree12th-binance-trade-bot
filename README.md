@@ -75,10 +75,9 @@ Create a .cfg file named `user.cfg` based off `.user.cfg.example`, then add your
 -   **stop_loss_ban_duration** - Controls the ban duration in minutes of the current coin when a stop loss sell is triggered. Default is 60.0
 -   **ratio_calc** - Controls the calculation for ratios between coins. Options available: default, scout_margin. Keep in mind you need to decrease your scout_multiplier for the scout_margin. A scout_multiplier of 12 with the default calc would be a scout_multiplier of 2 with the scout_margin calc.
 -   **accept_losses** - Needs to be set to true for highly risky and gamling strategies. Otherwise the bot wont start.
--   **max_idle_hours** - Controls the amount of hours for reseting the ratios when the bot has not traded (only used in db_reset strategy)
--   **ratio_adjust_weight** - Controls the weight of the cumulative moving ratio avarage in the ratio_adjust strategy (only used in ratio_adjust strategy)
 -   **auto_adjust_bnb_balance** - Controls the bot to auto buy BNB while there is no enough BNB balance in your account, to get the benifits of using BNB to pay the commisions. Default is false. Effective if you have enabled to [use BNB to pay for any fees on the Binance platform](https://www.binance.com/en/support/faq/115000583311-Using-BNB-to-Pay-for-Fees), reade more information [here](#paying-fees-with-bnb).
 -   **auto_adjust_bnb_balance_rate** - The multiplying power of buying quantity of BNB compares to evaluated comission of the coming order, effective only if auto_adjust_bnb_balance is true. Default value is 3.
+-   **allow_coin_merge** - Allow multiple_coins strategy to merge coins into one. It turned out that its more profitable if the strategy can merge the held coins into one. If you dont want this you may be safer for one falling coin but you also pay with potential gains. Default is true to ensure the behavior is like in the origin repo.
 
 #### Environment Variables
 
@@ -100,6 +99,7 @@ BUY_ORDER_TYPE: limit
 SELL_ORDER_TYPE: market
 AUTO_ADJUST_BNB_BALANCE: false
 AUTO_ADJUST_BNB_BALANCE_RATE: 3
+ALLOW_COIN_MERGE: true
 ```
 
 ### Paying Fees with BNB
@@ -198,7 +198,7 @@ Fist of all, support the originator of this bot and buy him a coffee. ☕
 
 <a href="https://www.buymeacoffee.com/edeng" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-If you like my adjustments or strategies and you want to support me I would appreciate to get a coffee too. 😜
+If you like my adjustments and you want to support me I would appreciate to get a coffee too. 😜
 
 <a href="https://www.buymeacoffee.com/tntwist" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
